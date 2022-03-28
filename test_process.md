@@ -73,6 +73,28 @@ hint: its remote counterpart. Integrate the remote changes (e.g.
 hint: 'git pull ...') before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
-__hint__ 에서는 git pull을 해보라고 하지만 git pull을 해도 tracking information이 없다(병합할게 없다.)는 메시지만 뜬다. 
+__hint__ 에서 말하는대로 git pull을 하게 되면, 
 
-즉, 실제로 현재 브랜치가 뒤쳐졌다는 얘기는 pull을 안 해서가 아니라 HEAD 커밋의 해시값이 local과 remote에서 각각 다르기 때문에 발생하는 문제인 것으로 예측된다. 
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> test
+
+에러가 발생하는데, __UP STREAM__ 설정이 안 되어 있어서 그러는 것이다. 따라서 branch에 설정을 해준 후 다시 git pull을 하면 
+
+Merge made by the 'ort' strategy.
+
+라는 메시지와 함께 pull이 완료된다. ort라는 것은 3-way strategy로 병합을 하는 것을 말하므로 두 브랜치를 병합한 형태로 pull이 완료된다. 
+
+따라서 __덮어썼던 커밋이 다시 History 상에 등장한다.__
+
+결국, <pre><code>git push -f</code></pre>를 통해서 강제 푸시 하는 것이 유일하게 원격 저장소를 로컬 저장소로 덮어쓸 수 있는 방법이다. 
+
+
+
+
