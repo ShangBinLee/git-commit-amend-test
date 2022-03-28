@@ -58,13 +58,15 @@ test-amend와 동일
 
 ##### test-amend 커밋 목록 
 
-__1f9fd3dbc212573c30874cbc788bf1df7f05403b__ (HEAD -> master, origin/master) test_process.md first commit   
+
+__0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ (HEAD -> master, origin/master) test_process.md first commit   
 __bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
 __77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
 __92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
 __8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit   
 
-기존의 __423b89f2__ 커밋이 __1f9fd3db__ 커밋으로 덮어쓰여짐. 
+기존의 __423b89f2__ 커밋이 __0d0dcc20__ 커밋으로 덮어쓰여짐. 
+
 
 git push origin test-amend를 진행했을 때 에러가 발생. 
 
@@ -111,7 +113,9 @@ git push --force-with-lease
 
 를 통해 push를 해보았다. 실패하지 않고 push되어 원격 저장소에 로컬 저장소 내용을 덮어썼다. 
 
-기존의 __423b89f29cc2b9f4720d8c067ad4f558f0795239__ 커밋이 아닌 __1f9fd3dbc212573c30874cbc788bf1df7f05403b__ 으로 변경된 모습이었다.
+
+기존의 __423b89f29cc2b9f4720d8c067ad4f558f0795239__ 커밋이 아닌 __0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ 으로 변경된 모습이었다.
+
 
 또다시 
 
@@ -119,7 +123,8 @@ git push --force-with-lease
 git push -f 
 ``` 
 
-를 통해 기존의 __1f9fd3db__ 커밋을 포함하여 push 하니 다시 변경된 모습이다. 
+를 통해 기존의 __423b89f2__ 커밋을 포함하여 push 하니 다시 변경된 모습이다. 
+
 
 이번 단계에서는 <pre><code>git push --force-with-lease</code></pre>의 특징이 드러나지는 않고 일반적인 강제 푸시와 동일하게 작동하였다.
 
