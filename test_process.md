@@ -54,11 +54,11 @@ test-amend와 동일
 
 ##### test-amend 커밋 목록 
 
-__1f9fd3dbc212573c30874cbc788bf1df7f05403b__ (HEAD -> master, origin/master) test_process.md first commit
-__bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의
-__77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations
-__92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns
-__8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit
+__1f9fd3dbc212573c30874cbc788bf1df7f05403b__ (HEAD -> master, origin/master) test_process.md first commit   
+__bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
+__77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
+__92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
+__8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit   
 
 기존의 __423b89f2__ 커밋이 __1f9fd3db__ 커밋으로 덮어쓰여짐. 
 
