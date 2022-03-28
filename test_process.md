@@ -96,5 +96,29 @@ Merge made by the 'ort' strategy.
 결국, <pre><code>git push -f</code></pre>를 통해서 강제 푸시 하는 것이 유일하게 원격 저장소를 로컬 저장소로 덮어쓸 수 있는 방법이다. 
 
 
+#### <pre><code>git push -f</code>  <code>git push --force-with-lease</code></pre>
+
+처음에는 
+
+```git
+git push --force-with-lease
+```
+
+를 통해 push를 해보았다. 실패하지 않고 push되어 원격 저장소에 로컬 저장소 내용을 덮어썼다. 
+
+기존의 __423b89f29cc2b9f4720d8c067ad4f558f0795239__ 커밋이 아닌 __1f9fd3dbc212573c30874cbc788bf1df7f05403b__ 으로 변경된 모습이었다.
+
+또다시 
+
+```git
+git push -f 
+``` 
+
+를 통해 기존의 __1f9fd3db__ 커밋을 포함하여 push 하니 다시 변경된 모습이다. 
+
+이번 단계에서는 <pre><code>git push --force-with-lease</code></pre>의 특징이 드러나지는 않고 일반적인 강제 푸시와 동일하게 작동하였다.
+
+
+## 2번 테스트 
 
 
