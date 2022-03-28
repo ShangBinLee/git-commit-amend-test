@@ -4,6 +4,7 @@ repository에 push한 상태에서 5가지 경우로 나누어서 테스트
 ##### 1. desktop
 ##### 2. notebook
 
+### 주의 
 __밑의 상황은 desktop과 notebook에서 remote repository를 최신으로 업데이트 갱신해놓은 상태에서 진행함.__
 * * *
 
