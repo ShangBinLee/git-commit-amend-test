@@ -1,10 +1,13 @@
 repository에 push한 상태에서 5가지 경우로 나누어서 테스트
+===================================================
+### 참여하는 contributor
+##### 1. desktop
+##### 2. notebook
 
-참여하는 contributor = desktop, notebook
+__밑의 상황은 desktop과 notebook에서 remote repository를 최신으로 업데이트 갱신해놓은 상태에서 진행함.__
+* * *
 
-desktop과 notebook에서 remote repository를 최신으로 업데이트 갱신해놓은 상황에서 진행함.
-
-5가지 상황 
+## 5가지 상황 
 
 1. desktop에서 push하고, notebook에서 pull하지 않은 상태에서 desktop에서 --amend로 커밋 메시지 수정 후에 git push 해보고 안 되면 git push --force-with-lease 
 
@@ -18,7 +21,7 @@ desktop과 notebook에서 remote repository를 최신으로 업데이트 갱신�
 
 1번 후에 2번에서 notebook에서 pull하는 것으로 정상적으로 되는지 확인할 수 있을 듯.
 
-예상
+## 예상
 
 1. notebook에서 pull하지 않았는데 push 혹은 push -f를 하는 것이므로 정상적으로 pull도 되고 이후에 작업을 하더라도 연동된 것으로 하기 때문에 삭제된 커밋이 되살아나거나 하는 일은 없을듯.
 
