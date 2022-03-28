@@ -131,4 +131,50 @@ git push -f
 
 ## 2번 테스트 
 
+#### 테스트 시행 전 상황
 
+* ##### 브랜치 목록
+
+1. test-amend(local in desktop)
+2. origin/test-amend(remote)
+
+* ##### 브랜치별 커밋 목록 
+
+1. test-amend(local in desktop)
+__0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ (HEAD -> master, origin/master) test_process.md first commit   
+__bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
+__77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
+__92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
+__8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit
+
+2. origin/test-amend(remote)
+
+test-amend와 동일
+
+<hr>
+
+#### 테스트 과정 
+
+* in notebook
+
+notebook 기본 설정하고 리모트 연결하고 clone이 아닌 다른 방식으로 test-amend만 가지고 올 수 있는지 확인. 안 되면 그냥 clone 사용
+
+1. git pull origin test-amend 
+
+2. git commit --amend
+
+3. git push origin test-amend 
+
+안될 경우 
+
+4. git push --force-with-lease [origin test-amend]
+
+또 안될 경우 
+
+5. git push -f [origin test-amend]
+
+<hr>
+
+#### 테스트 결과 
+
+##### test-amend 커밋 목록
