@@ -18,20 +18,20 @@
 
 1. master 
 
-__1f9fd3dbc212573c30874cbc788bf1df7f05403b__(HEAD -> master, origin/master)
-__bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의
-__77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations
-__92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns
-__8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit
+__1f9fd3dbc212573c30874cbc788bf1df7f05403b__(HEAD -> master, origin/master)   
+__bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
+__77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
+__92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
+__8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit   
 생략...
 
 2. test-amend
 
-__423b89f29cc2b9f4720d8c067ad4f558f0795239__ (HEAD -> test-amend, origin/test-amend) 앗 실수
-__bd8e25414bd55531bb0dc6864c142df944ab1e00__ (origin/master, master) README.md add 주의
-__77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations
-__92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns
-__8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit
+__423b89f29cc2b9f4720d8c067ad4f558f0795239__ (HEAD -> test-amend, origin/test-amend) 앗 실수   
+__bd8e25414bd55531bb0dc6864c142df944ab1e00__ (origin/master, master) README.md add 주의   
+__77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
+__92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
+__8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit   
 생략...
 
 3. origin/master
