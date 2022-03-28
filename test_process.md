@@ -42,6 +42,8 @@ master와 동일
 
 test-amend와 동일
 
+<hr>
+
 #### 테스트 과정 
 
 1. git checkout test-amend
@@ -49,6 +51,8 @@ test-amend와 동일
 2. git commit -amend 
 
 3. git push origin test-amend 
+
+<hr>
 
 #### 테스트 결과 
 
@@ -95,6 +99,7 @@ Merge made by the 'ort' strategy.
 
 결국, <pre><code>git push -f</code></pre>를 통해서 강제 푸시 하는 것이 유일하게 원격 저장소를 로컬 저장소로 덮어쓸 수 있는 방법이다. 
 
+<hr>
 
 #### git push -f & git push --force-with-lease
 
