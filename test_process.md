@@ -177,4 +177,42 @@ notebook 기본 설정하고 리모트 연결하고 clone이 아닌 다른 방�
 
 #### 테스트 결과 
 
-##### test-amend 커밋 목록
+##### 브랜치별 커밋 목록
+
+1. test-amend(local in desktop)
+__014eb4c47b1af7a121d4ffe131d25dfc6c5a2d01__ (HEAD -> test-amend, origin/test-amend) test.html add p tag and its contents 수정함
+__bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의
+__77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations
+__92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns
+__8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit
+
+2. origin/test-amend(remote)
+local in desktop과 동일
+
+3. test-amend(local in notebook)
+__0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ (HEAD -> master, origin/master) test.html add p tag and its contents   
+__bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
+__77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
+__92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
+__8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit
+
+
+기존의 __0d0dcc2__ 커밋이 __014eb4c__ 커밋으로 덮어쓰여짐.
+
+단, 1번 테스트 때와 마찬가지로 일반적인 <pre><code>git push</code></pre>로는 원격 저장소에 push할 수 없었다.
+
+따라서 <pre><code>git push --force-with-lease</code></pre>를 사용했는데 1번 테스트 때와 마찬가지로 강제 push 되었다. 
+
+<pre><code>git push -f</code></pre> 또한 강제 push된다. 
+
+다만, 이렇게 할 경우 notebook 에서 <pre><code>git pull</code></pre>을 하게 되면 ort 방식으로 merge 하기 때문에 역시나 원격 저장소 상에서는 사라졌었던 
+
+__0d0dcc2__ 커밋이 재등장하게 된다. 
+
+이 상태로 <pre><code>git push origin test-amend</code></pre>를 했는데 잘 적용되었다. fast-forawrd 방식으로 적용이 되었다는 뜻이다.
+
+또 이렇게 할 경우 문제 사항은, github file history 상에서 amend한 commit인 __014eb4c__ 커밋이 아닌 기존의 __0d0dcc2__ 커밋이 최신으로 보이게 되고 __014eb4c__ 커밋은 사라져 보이지 않는다는 것이다.
+
+이는 __git history simplification__ 때문이라고 한다. 따라서 <pre><code>git log --full-history [file-name]</code></pre>을 하여야 전체 history를 볼 수 있다. 
+
+하지만 github 상에서는 여전히 볼 수 없기 때문에 다른 사용자가 이미 원격저장소의 커밋을 pull한 상태에서 강제 push를 하는 것은 위험할 수 있다. 
