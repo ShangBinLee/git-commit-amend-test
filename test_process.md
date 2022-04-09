@@ -180,10 +180,10 @@ notebook 기본 설정하고 리모트 연결하고 clone이 아닌 다른 방�
 ##### 브랜치별 커밋 목록
 
 1. test-amend(local in desktop)   
-__014eb4c47b1af7a121d4ffe131d25dfc6c5a2d01__ (HEAD -> test-amend, origin/test-amend) test.html add p tag and its contents 수정함
-__bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의
-__77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations
-__92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns
+__014eb4c47b1af7a121d4ffe131d25dfc6c5a2d01__ (HEAD -> test-amend, origin/test-amend) test.html add p tag and its contents 수정함   
+__bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
+__77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
+__92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
 __8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit
 
 2. origin/test-amend(remote)   
