@@ -59,7 +59,7 @@ test-amend와 동일
 ##### test-amend 커밋 목록 
 
 
-__0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ (HEAD -> master, origin/master) test_process.md first commit   
+__0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ (HEAD -> master, origin/master) test.html add p tag and its contents   
 __bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
 __77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
 __92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
@@ -141,7 +141,7 @@ git push -f
 * ##### 브랜치별 커밋 목록 
 
 1. test-amend(local in desktop)
-__0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ (HEAD -> master, origin/master) test_process.md first commit   
+__0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ (HEAD -> master, origin/master) test.html add p tag and its contents 
 __bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
 __77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
 __92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
