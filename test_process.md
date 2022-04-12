@@ -241,3 +241,29 @@ git pull
 hard reset을 amended commit 바로 이전의 커밋으로 한다. 그러면 amended commit은 로그 상에서 삭제되어버린다. 그 상태에서 원격 저장소를 pull하면 알아서 fast-forward 방식으로 merge하면서 작업이 완료된다. 
 
 이 방법이 가장 깔끔하고 적절하고 간단한 방법이다. 단 두 개의 명령어만 있으면 된다.
+
+## 3번 테스트
+
+#### 테스트 시행 전 상황 
+
+* ##### 브랜치 목록 
+
+1. test-amend(local in desktop)
+2. origin/test-amend(remote)
+3. test-amend(local in notebook)
+
+* ##### 브랜치별 커밋 목록 
+
+1. test-amend
+
+2. origin/test-amend
+
+3. test-amend(local in notebook)
+
+<hr>
+
+#### 테스트 과정 
+
+<hr>
+
+#### 테스트 결과 
