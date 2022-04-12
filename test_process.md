@@ -227,3 +227,17 @@ __0d0dcc2__ 커밋이 재등장하게 된다.
 을 하여야 전체 history를 볼 수 있다. 
 
 하지만 github 상에서는 여전히 볼 수 없기 때문에 다른 사용자가 이미 원격저장소의 커밋을 pull한 상태에서 강제 push를 하는 것은 위험할 수 있다. 
+
+##### 대처(notebook에서 삭제 커밋 되돌리지 않으면서 원격저장소 pull하기)
+notebook의 로컬 저장소에는 원격 저장소와 desktop의 로컬 저장소에서 삭제된(정확히 말하면 amend된) 커밋이 여전히 존재하는 상태이기 때문에 원격 저장소의 상태를 반영하여 삭제된 커밋을 로그 상에 되돌리지 않으면서 pull하는 방법이 필요하다.
+
+지금 상태에서는 딱 한 가지 방법이 가장 적절하고 간단하다.
+
+```
+git reset --hard [previous commit of amended commit]
+git pull
+```
+
+hard reset을 amended commit 바로 이전의 커밋으로 한다. 그러면 amended commit은 로그 상에서 삭제되어버린다. 그 상태에서 원격 저장소를 pull하면 알아서 fast-forward 방식으로 merge하면서 작업이 완료된다. 
+
+이 방법이 가장 깔끔하고 적절하고 간단한 방법이다. 단 두 개의 명령어만 있으면 된다.
