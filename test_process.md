@@ -271,22 +271,22 @@ local in desktop과 동일
 
 * in notebook
 
-test-amend 브랜치에서 test.html 파일 수정 -> commit.
+    test-amend 브랜치에서 test.html 파일 수정 -> commit.
 
 * in desktop
 
-test-amend 브랜치에서 
+    test-amend 브랜치에서 
 
-1. git commit --amend
-2. git push
+    1. git commit --amend
+    2. git push
 
 안될 경우
 
-git push --force-with-lease
+    3. git push --force-with-lease
 
 또 안될 경우
 
-git push -f
+    4. git push -f
 
 <hr>
 
