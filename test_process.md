@@ -102,7 +102,7 @@ __hint__ 에서 말하는대로 git pull을 하게 되면,
 
 <hr>
 
-#### git push -f & git push --force-with-lease
+#### 강제 푸시
 
 처음에는 
 
