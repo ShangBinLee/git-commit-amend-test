@@ -16,31 +16,31 @@
 
 * ##### 브랜치별 커밋 목록 
 
-1. master 
+1. master
 
-__1f9fd3dbc212573c30874cbc788bf1df7f05403b__(HEAD -> master, origin/master)   
-__bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
-__77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
-__92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
-__8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit   
-생략...
+    __1f9fd3dbc212573c30874cbc788bf1df7f05403b__(HEAD -> master, origin/master)   
+    __bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
+    __77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
+    __92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
+    __8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit   
+    생략...
 
 2. test-amend
 
-__423b89f29cc2b9f4720d8c067ad4f558f0795239__ (HEAD -> test-amend, origin/test-amend) 앗 실수   
-__bd8e25414bd55531bb0dc6864c142df944ab1e00__ (origin/master, master) README.md add 주의   
-__77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
-__92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
-__8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit   
-생략...
+    __423b89f29cc2b9f4720d8c067ad4f558f0795239__ (HEAD -> test-amend, origin/test-amend) 앗 실수   
+    __bd8e25414bd55531bb0dc6864c142df944ab1e00__ (origin/master, master) README.md add 주의   
+    __77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
+    __92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
+    __8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit   
+    생략...
 
 3. origin/master
 
-master와 동일
+    master와 동일
 
 4. origin/test-amend
 
-test-amend와 동일
+    test-amend와 동일
 
 <hr>
 
@@ -54,46 +54,45 @@ test-amend와 동일
 
 <hr>
 
-#### 테스트 결과 
+#### 테스트 결과
 
-##### test-amend 커밋 목록 
+- test-amend 커밋 목록 
 
-
-__0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ (HEAD -> master, origin/master) test.html add p tag and its contents   
-__bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
-__77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
-__92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
-__8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit   
+    __0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ (HEAD -> test-amend, origin/test-amend) test.html add p tag and its contents   
+    __bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
+    __77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
+    __92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
+    __8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit   
 
 기존의 __423b89f2__ 커밋이 __0d0dcc20__ 커밋으로 덮어쓰여짐. 
 
 
 git push origin test-amend를 진행했을 때 에러가 발생. 
 
-에러 내용 
+__에러 내용__
 
- ! [rejected]        test-amend -> test-amend (non-fast-forward)   
-error: failed to push some refs to 'github.com:ShangBinLee/git-commit-amend-test.git'
-hint: Updates were rejected because the tip of your current branch is behind   
-hint: its remote counterpart. Integrate the remote changes (e.g.
-hint: 'git pull ...') before pushing again.   
-hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+    ! [rejected]        test-amend -> test-amend (non-fast-forward)   
+    error: failed to push some refs to 'github.com:ShangBinLee/git-commit-amend-test.git'
+    hint: Updates were rejected because the tip of your current branch is behind   
+    hint: its remote counterpart. Integrate the remote changes (e.g.
+    hint: 'git pull ...') before pushing again.   
+    hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
 __hint__ 에서 말하는대로 git pull을 하게 되면, 
 
-There is no tracking information for the current branch.   
-Please specify which branch you want to merge with.   
-See git-pull(1) for details.
+    There is no tracking information for the current branch.   
+    Please specify which branch you want to merge with.   
+    See git-pull(1) for details.
 
     git pull <remote> <branch>
 
-If you wish to set tracking information for this branch you can do so with:
+    If you wish to set tracking information for this branch you can do so with:
 
     git branch --set-upstream-to=origin/<branch> test
 
 에러가 발생하는데, __UP STREAM__ 설정이 안 되어 있어서 그러는 것이다. 따라서 branch에 설정을 해준 후 다시 git pull을 하면 
 
-Merge made by the 'ort' strategy.
+    Merge made by the 'ort' strategy.
 
 라는 메시지와 함께 pull이 완료된다. ort라는 것은 3-way strategy로 병합을 하는 것을 말하므로 두 브랜치를 병합한 형태로 pull이 완료된다. 
 
@@ -141,7 +140,7 @@ git push -f
 * ##### 브랜치별 커밋 목록 
 
 1. test-amend(local in desktop)   
-__0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ (HEAD -> master, origin/master) test.html add p tag and its contents   
+__0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ (HEAD -> test-amend, origin/test-amend) test.html add p tag and its contents   
 __bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
 __77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
 __92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
@@ -149,7 +148,7 @@ __8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit
 
 2. origin/test-amend(remote)
 
-test-amend와 동일
+    test-amend와 동일
 
 <hr>
 
@@ -157,21 +156,21 @@ test-amend와 동일
 
 * in notebook
 
-notebook 기본 설정하고 리모트 연결하고 clone이 아닌 다른 방식으로 test-amend만 가지고 올 수 있는지 확인. 안 되면 그냥 clone 사용
+    notebook 기본 설정하고 리모트 연결하고 clone이 아닌 다른 방식으로 test-amend만 가지고 올 수 있는지 확인. 안 되면 그냥 clone 사용
 
-1. git pull origin test-amend 
+    1. git pull origin test-amend 
 
-2. git commit --amend
+    2. git commit --amend
 
-3. git push origin test-amend 
+    3. git push origin test-amend 
 
-안될 경우 
+    안될 경우 
 
-4. git push --force-with-lease [origin test-amend]
+    4. git push --force-with-lease [origin test-amend]
 
-또 안될 경우 
+    또 안될 경우 
 
-5. git push -f [origin test-amend]
+    5. git push -f [origin test-amend]
 
 <hr>
 
@@ -190,7 +189,7 @@ __8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit
 local in desktop과 동일
 
 3. test-amend(local in notebook)   
-__0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ (HEAD -> master, origin/master) test.html add p tag and its contents   
+__0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ (HEAD -> test-amend, origin/test-amend) test.html add p tag and its contents   
 __bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
 __77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
 __92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
@@ -248,22 +247,22 @@ hard reset을 amended commit 바로 이전의 커밋으로 한다. 그러면 ame
 
 * ##### 브랜치 목록 
 
-1. test-amend(local in desktop)
-2. origin/test-amend(remote)
-3. test-amend(local in notebook)
+    1. test-amend(local in desktop)
+    2. origin/test-amend(remote)
+    3. test-amend(local in notebook)
 
 * ##### 브랜치별 커밋 목록 
 
-1. test-amend(local in desktop)
+1. test-amend(local in desktop)    
 __014eb4c47b1af7a121d4ffe131d25dfc6c5a2d01__ (HEAD -> test-amend, origin/test-amend) test.html add p tag and its contents 수정함   
 __bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
 __77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
 __92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
 __8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit
-2. origin/test-amend
-local in desktop과 동일
-3. test-amend(local in notebook)
-local in desktop과 동일
+2. origin/test-amend    
+    local in desktop과 동일
+3. test-amend(local in notebook)    
+    local in desktop과 동일
 
 <hr>
 
