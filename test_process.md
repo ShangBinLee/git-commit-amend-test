@@ -290,3 +290,325 @@ __8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit
 <hr>
 
 #### 테스트 결과 
+
+##### 브랜치별 커밋 목록
+
+1. test-amend(local in desktop)   
+__e63ab804e378eb1ded1769916d8510ffbdc69d80__ (HEAD -> test-amend, origin/test-amend) test.html add p tag and its contents 재수정함   
+__bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
+__77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
+__92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
+__8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit
+
+2. origin/test-amend(remote)   
+    local in desktop과 동일
+
+3. test-amend(local in notebook)   
+__0ae37b9e293e0021d5035d6a6e0811996e41b106__ (HEAD -> test-amend) test.html add span tag and its contents   
+__014eb4c47b1af7a121d4ffe131d25dfc6c5a2d01__ (origin/test-amend) test.html add p tag and its contents 수정함   
+__bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
+__77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
+__92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
+
+#### 결과 설명
+
+* in notebook
+
+    파일을 수정하고 추가 커밋을 진행하여 __0ae37b9__ 커밋이 추가됐다. 이에 따라 원격 저장소 기준으로 앞서있게 됐다.
+
+* in desktop
+
+    커밋을 amend하고 push를 진행했다. 되지 않았다. 따라서 push --force-with-lease를 했다. push가 완료되었다.
+
+* in notebook
+
+    파일을 pull했다. 이번에는 __CONFLICT__ 가 발생하였다. 이는 __e63ab80__ 커밋이 __0ae37b9__ 커밋의 수정 내역을 반영하지 않고 있기 때문이다. 
+
+따라서 충돌을 해결해야 했다. VS Code를 통하여 직접 파일을 수정하였다. 
+
+여기서 크게 세 가지의 경우가 존재한다. 
+
+1. __0ae37b9__(local in notebook) 커밋의 수정 사항만 반영
+2. __e63ab80__(local in desktop) 커밋의 수정 사항만 반영
+3. 둘 다 반영
+
+물론 둘 다 반영 안 하는 경우도 있다. 하지만 그럴려면 굳이 Merge를 할 필요가 없다고 생각하기 때문에 포함하지 않았다. 또한, 두 커밋의 수정 사항을 각각 일부만 반영하고 일부는 쳐내는 경우도 포함하지 않았다. 
+
+너무 복잡해지기 때문이다.
+
+<hr>
+
+__1번의 경우__
+
+* log 상의 커밋 목록
+
+    __3622a40a22993df81ac92a2f71e0e0e344cd37f1__ (Merge Commit) (HEAD -> test-amend) Merge branch 'test-amend' of github.com:ShangBinLee/git-commit-amend-test into test-amend   
+    __e63ab804e378eb1ded1769916d8510ffbdc69d80__ (in origin/test-amend) (origin/test-amend) test.html add p tag and its contents 재수정함   
+    __0ae37b9e293e0021d5035d6a6e0811996e41b106__ (since now, in test-amend) test.html add span tag and its contents   
+    __014eb4c47b1af7a121d4ffe131d25dfc6c5a2d01__ test.html add p tag and its contents 수정함   
+    __bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
+    
+* test.html(file) log 상의 목록 
+
+    __0ae37b9e293e0021d5035d6a6e0811996e41b106__ (since now, in test-amend) test.html add span tag and its contents   
+    __014eb4c47b1af7a121d4ffe131d25dfc6c5a2d01__ test.html add p tag and its contents 수정함   
+    __e4bd2b3d1e42fb084e47ccb50c0020cd6538add3__ test.html h1 tag and content added   
+    __f06d4bfac4ac8327908b80dc3581d582ab82355d__ test.html title changed   
+    __36a96efacf41a34320b87bddecf9d6f71d6ad530__ test.html first commit   
+
+log 상의 커밋 목록은 Merge 후의 일반적인 log 내용이다. Merge Commit이 최신 커밋이며, Merged Branch의 Commit도 보인다. 
+
+하지만 test.html File log는 좀 다르다. 
+
+<hr>
+
+Merge Commit 생략   
+__e63ab80__ 커밋 생략
+
+__0ae37b9__ 커밋 포함(최신 커밋)
+
+<hr>
+되었다.
+
+2번 테스트 결과에서 __history simplification__ 을 얘기했는데, 이것 때문에 File History는 전체 History와는 다르게 출력될 수 있다. 
+
+즉, Merge Commit이 사라졌으며, __e63ab80__ 커밋(local in desktop, origin/test-amend)이 사라진 것은 모두 history simplification 때문이다.
+
+History Simplification가 File에 대하여 적용될 때, 현재 최신 커밋(즉, HEAD가 가리키는 커밋)에서의 파일의 최종 상태를 설명할 수 있는 커밋만 보여주게 된다.
+
+따라서 최신 커밋으로부터, 그것의 부모 커밋을 거쳐가며 커밋 간 파일의 상태(즉, Tree)를 비교하게 되고, 변경이 존재하는지 존재하지 않는지에 따라 해당 커밋을 포함할지 안 할지를 결정한다. 
+
+자세한 내용은 현재 Repository의 
+
+https://github.com/ShangBinLee/git-commit-amend-test/blob/master/history_simplification.md
+
+를 참고하도록 한다. 
+
+중요한 것은 Merge Commit이 존재할 경우, 거쳐가야 할 부모 커밋은 최소 두 개 이상이 된다는 것이며(Merge를 하더라도 Fast-Forward, Rebase 등의 방식으로 진행하면 부모 커밋은 하나 뿐이다.)
+따라서, 어떤 부모 커밋을 거쳐갈지 선택해야 한다. 선택하는 부모 커밋은 최소 한 개 이상이어야 한다.(경우에 따라서는 Merge Commit의 모든 부모 커밋을 선택하는 경우도 존재한다.)
+
+__결과적으로 Merge Commit이 존재할 경우, File History에서는 해당 File을 수정한 커밋이라고 하더라도 출력되지 않고 생략될 수 있다.__
+
+어쨌든 이러한 History Simplification 때문에 File History 상에서 최신 커밋은 __0ae37b9__ 커밋이 된다. 
+
+<hr>
+
+__2번의 경우__
+
+* log 상의 커밋 목록 
+
+    Merge Commit 제외 
+    
+    1번의 경우와 동일하다.
+
+* test.html(file) log 상의 목록
+
+    __e63ab804e378eb1ded1769916d8510ffbdc69d80__ (origin/test-amend) test.html add p tag and its contents 재수정함   
+    __e4bd2b3d1e42fb084e47ccb50c0020cd6538add3__ test.html h1 tag and content added   
+    __f06d4bfac4ac8327908b80dc3581d582ab82355d__ test.html title changed   
+    __36a96efacf41a34320b87bddecf9d6f71d6ad530__ test.html first commit   
+
+log 상의 커밋 목록은 Merge Commit만 변경되었다. 이는 Commit Hash 값을 결정하는 방식 때문이다. 
+
+test.html File log는 1번의 경우와 달라졌다. 요번에는 표시되는 총 커밋 수도 4개로 줄어들었고(분명히 -5 옵션을 사용했다.)
+
+<hr>
+
+Merge Commit 생략   
+__0ae37b9__ 커밋 생략   
+__014eb4c__ 커밋 생략
+
+__e63ab80__ 커밋 포함
+
+<hr>
+되었다. 
+
+여기서 1, 2번 경우에서의 공통점을 발생할 수 있다.
+
+두 경우 모두 __Merge Commit은 생략된다.__
+
+왜 이런 결과가 발생할까.
+
+결과부터 말하자면, Merge Commit이 File History에 포함되지 않는 경우는, 
+
+"__충돌이 발생한 두 커밋 중 하나의 커밋만 반영하는 경우.__"
+
+이다. 
+
+풀어서 말하면
+
+1. __두 커밋 중 어떤 것도 반영하지 않는 경우__   
+2. __두 커밋 모두 반영하는 경우__
+
+에 Merge Commit이 포함된다. 
+
+이 것은 History Simplification을 이루어내는 방식 때문이다.
+
+어쨌든 1, 2번의 경우는 모두 두 커밋 중 하나의 커밋만 반영하는 경우이므로 Merge Commit은 포함되지 않는다. 
+
+그렇다면 왜 각각의 경우에 Merge Commit의 부모 커밋 중 생략되는 커밋과 포함되는 커밋이 달라지는 것일까.
+
+심지어 이번에 생략된 __014eb4c__ 커밋은 Merge Commit의 부모 커밋도 아니다.(즉, 조상 커밋이다.)
+
+이유를 간단하게 설명하자면, 1, 2번의 경우에, Merge Commit과 같은 File 상태를 가지는(즉, File 내용의 차이가 존재하지 않는) 부모 커밋을 거쳐갈 커밋으로 선택하기 때문이다. 
+
+그러므로 그렇지 않은 커밋은 버려진다. 
+
+따라서 결과적으로 __0ae37b9__ 이 버려졌다. 
+
+또한 선택된 __e63ab80__ 의 조상 커밋은 __e4bd2b3__ 커밋이다. 
+
+즉, __014eb4c__ 커밋은 __0ae37b9__ 커밋의 부모 커밋이자 "__test-amend(local in notebook)__" 브랜치에만 존재하고 "__remotes/origin/test-amend__"에는 존재하지 않는 커밋인 것이다. 
+
+__따라서 History Simplification은 필요할 경우 Side Branch의 커밋들을 모두 쳐내기도 한다.__
+
+- 참고 : 여기서 Side Branch는 현재 브랜치 기준으로 병합된 브랜치를 말하는 것이 아니다. History Simplification에 의해서 거쳐가기로 선택된 커밋이 속해있는 브랜치가 아닌 나머지 브랜치들을 일컫는다. 따라서, 여기서 Side Branch는 "__test-amend(local in notebook)__"가 된다.
+
+<hr>
+
+__3번의 경우__
+
+그렇다면 마지막, 모두 반영하는 3번의 경우에는 어떻게 될까. 예상을 해보자.
+
+
+아마도 1, 2번에서 생략되었던 모든 커밋이 포함되어있을 것 같다. 정말 그런지 확인해보자.
+
+* log 상의 커밋 목록 
+
+    Merge Commit 제외 
+    
+    1번의 경우와 동일하다.
+
+* test.html(file) log 상의 목록
+
+    1번의 경우와 동일하다.
+
+__예상과는 다르다!__
+
+1번의 경우와 같다!
+
+1번의 경우는 __0ae37b9__(local in notebook) 커밋의 수정 사항만 반영하는 경우였다. 그런데 이 경우와 같은 로그 내용이 출력되었다. 왜 이런 결과가 발생했을까?
+
+정답은 요번에 Merge한 두 브랜치의 커밋 수정 내용에 있다. 
+
+먼저 remote repository에 있었던, __e63ab80__ 커밋의 파일 내용을 보자 
+
+    생략...
+    <p>amend 테스트를 위해서 추가하는 사항</p>
+
+그리고 local repository에 있었던, __0ae37b9__ 커밋의 파일 내용을 보자
+
+    생략...
+    <p>amend 테스트를 위해서 추가하는 사항</p>
+    <span>3번 테스트를 위해서 추가하는 사항</span>
+
+즉, __0ae37b9__ 커밋의 파일 내용은 __e63ab80__ 커밋의 파일 내용에 span 태그와 그 내용을 추가한 형태로 되어있다. 그런데 왜 Merge를 할 때 충돌이 발생했을까? 그냥 __0ae37b9__ 기준으로 병합하면 되지 않는가?
+
+사실 이 문제는 두 커밋의 공통 조상 커밋인 __bd8e254__ 커밋의 파일 내용이 h1 태그(p 태그 바로 이전의 태그)와 그 내용까지만 가지고 있었기 때문에 발생한다. 공통 조상 기준으로 봤을 때 두 커밋은 파일의 같은 부분을 수정했고(h1 태그 이후 부분), 그 내용도 서로 다르기 때문에 충돌이 발생한 것이다. 
+
+그렇지만 실제로 충돌을 수정할 때, 두 커밋의 수정 사항을 모두 반영하면, 파일 내용의 최종 형태는
+
+    생략...
+    <p>amend 테스트를 위해서 추가하는 사항</p>
+    <span>3번 테스트를 위해서 추가하는 사항</span>
+
+가 되기 때문에, Merge Commit에서의 파일 내용과, __0ae37b9__ 커밋의 파일 내용은 서로 같다! 즉, 두 커밋의 File 상태는 동일하다!
+
+그러므로 두 커밋은 TREESAME 상태이다. 
+
+결국, History는 __0ae37b9__ 커밋을 따라가게 되면서, 1번의 경우와 완전히 똑같은 File History가 나오게 되는 것이다. 
+
+
+
+- 여기서 알 수 있는 사실은, File History에 출력되는 기준은 Merge할 당시에 해당 커밋의 수정 사항을 반영했냐, 하지 않았냐가 아니라, 순전히 Merge Commit과 TREESAME한 지를 기준으로 한다는 것이다. 따라서 Merge 당시 해당 커밋의 수정 사항을 반영했다고 하더라도 파일 내용 상 차이점이 존재한다면 상황에 따라서 File History에서 보이지 않을 수도 있다. 
+
+
+
+원래라면, 3번의 경우까지 하고 마쳐야 하지만 3번 경우의 결과를 확인하고 나니 나머지 경우의 결과도 확인해봐야 할 것 같다. 
+
+
+<hr>
+
+__둘 다 반영하지 않는 경우__
+
+예측은 이렇다. 
+
+- Merge Commit 
+- test-amend(local in notebook) Commit
+- remotes/origin/test-amend(remote repository) Commit
+
+모두 포함되어 출력될 것 같다. 
+
+* log 상의 커밋 목록 
+
+    Merge Commit 제외 
+    
+    1번의 경우와 동일하다.
+
+* test.html(file) log 상의 목록
+
+    __d2b66a01de9f3be4c3ef8006189fd9d3b06c6059__ (HEAD -> test-amend) Merge branch 'test-amend' of github.com:ShangBinLee/git-commit-amend-test into test-amend   
+    __e63ab804e378eb1ded1769916d8510ffbdc69d80__ (origin/test-amend) test.html add p tag and its contents 재수정함   
+    __0ae37b9e293e0021d5035d6a6e0811996e41b106__ (since now, in test-amend) test.html add span tag and its contents   
+    __014eb4c47b1af7a121d4ffe131d25dfc6c5a2d01__ test.html add p tag and its contents 수정함   
+    __e4bd2b3d1e42fb084e47ccb50c0020cd6538add3__ test.html h1 tag and content added   
+
+
+결과는 이러하다.
+
+- Merge Commit 포함
+- __e63ab80__ 커밋 포함 
+- __0ae37b9__ 커밋 포함
+- __014eb4c__ 커밋 포함
+
+
+3번 경우에서 __e63ab80__ 커밋과 __0ae37b9__ 커밋의 파일 내용을 보여줬다. 실제로 
+
+```
+git show e63ab80
+```
+
+을 한 경우, 
+
+         생략...
+         <h1>amend를 통한 commit 수정</h1>
+    +    <p>amend 테스트를 위해서 추가하는 사항</p>    
+         생략...
+
+로 출력된다. 여기서 맨 앞에 +가 출력되어있는 줄을 보면 p 태그와 그 내용이다. 즉, __e63ab80__은 부모 커밋과 비교했을 때 p 태그와 그 내용이 추가되었다는 뜻이다. 
+
+마찬가지로, __0ae37b9__ 커밋은
+
+         생략...
+         <h1>amend를 통한 commit 수정</h1>
+         <p>amend 테스트를 위해서 추가하는 사항</p>    
+    +    <span>3번 테스트를 위해서 추가하는 사항</span> 
+         생략...
+
+로 출력된다. 여기서는 부모 커밋과 비교했을 때 span 태그와 그 내용이 추가되었다. 그리고 그 부모 커밋은 __014eb4c__ 커밋이다. 즉, __e63ab80__ 커밋과 그 수정 사항과 File 상태가 같다.
+
+그렇다면 Merge Commit은 어떨까.
+
+          생략...
+          <h1>amend를 통한 commit 수정</h1>
+    --    <p>amend 테스트를 위해서 추가하는 사항</p>    
+    -     <span>3번 테스트를 위해서 추가하는 사항</span> 
+          생략...
+
+으로 되어있다. 기존의 p, span 태그와 그 내용 모두 삭제한 모습이다. 
+
+각 커밋의 File 상태를 보니 왜 File History가 저렇게 출력되었는지 추측할 수 있을 것이다. Merge Commit은 __0ae37b9__ 커밋과도, __e63ab80__ 커밋과도 TREESAME 하지 않다. 
+
+__그렇기 때문에 Merge Commit은 그 두 커밋을 모두 거쳐가기로 결정한다.__
+
+또한, 그렇기 때문에 그 두 커밋의 공통 조상을 만나기 전까지 두 브랜치 상에 존재하는 모든 커밋을 거쳐가야 한다. 따라서 __014eb4c__ 커밋 또한 거쳐가야 하고, 그에 따라 File History에 포함된다. 
+
+
+
+
+
+#### History Simplification에 대한 결론
+결국 History Simplification은
+
+- 부모와 TREESAME한 커밋을 History 상에서 제외하고
+- Merge Commit과 TREESAME한 부모 커밋을 따라가기 위한 목적을 가지고 있는 로그 단순화 방법이다.
