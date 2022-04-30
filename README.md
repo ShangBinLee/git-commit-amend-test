@@ -14,11 +14,11 @@ __밑의 상황은 desktop과 notebook에서 remote repository를 최신으로 �
 
 2. __desktop에서 push한 것을, notebook에서 pull한 상태에서 notebook에서 작업을 하지 않고 desktop에서만 --amend로 커밋 메시지 수정 후에 git push, git push --force-with-lease__
 
-3. __2번에서 notebook에서 작업을 진행한 후, desktop에서만 --amend로 커밋 메시지 수정 후에 git push, git push --force-with-lease__
+3. __desktop에서 push한 것을, notebook에서 pull한 상태에서 notebook에서 작업을 진행한 후, desktop에서만 --amend로 커밋 메시지 수정 후에 git push, git push --force-with-lease__
 
-4. __3번에서 notebook에서 push하고 desktop에서 pull하지 않고 --amend로 커밋 메시지 수정 후에 git push, git push --force-with-lease__
+4. __desktop에서 push한 것을, notebook에서 pull한 상태에서 notebook에서 작업을 진행한 후, push하고 desktop에서 pull하지 않고 --amend로 커밋 메시지 수정 후에 git push, git push --force-with-lease__
 
-5. __4번에서 desktop에서 pull하고 --amend로 커밋 메시지 수정 후에 git push, git push --force-with-lease__
+5. __desktop에서 push한 것을, notebook에서 pull한 상태에서 notebook에서 작업을 진행한 후, push하고 desktop에서 pull하고 --amend로 커밋 메시지 수정 후에 git push, git push --force-with-lease__
 
 1번 후에 2번에서 notebook에서 pull하는 것으로 정상적으로 되는지 확인할 수 있을 듯.
 
