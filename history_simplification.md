@@ -25,12 +25,15 @@ git log --graph
 
 를 통해 출력한 History 상에서는
 
-M   <--- Merge Commit
-|\
-| A   <--- Amend Commit
-|/
+<hr>
+
+M   <--- Merge Commit   
+| &nbsp;&nbsp;\    
+| &nbsp;&nbsp;&nbsp;A   <--- Amend Commit   
+| &nbsp;&nbsp;/    
 O   <--- Original Commit(modified by A commit)
 
+<hr>
 
 이런 식으로 기준 브랜치와 Merge 된 브랜치 상의 커밋이 모두 출력되었다. 
 
@@ -42,11 +45,15 @@ git log --graph test.html
 
 에서는 
 
-O
-|
-|
-|
+<hr>
+
+O   
+|   
+|   
+|   
 C   <--- Other Commit(previous of Original)
+
+<hr>
 
 이런 식으로 출력되었다.
 
@@ -57,30 +64,38 @@ C   <--- Other Commit(previous of Original)
 
 ## History Simplification에 관한 References
 
-__https://git-scm.com/docs/git-log#_history_simplification__
+1. __https://git-scm.com/docs/git-log#_history_simplification__
 
-__https://localcoder.org/git-history-for-branch-after-merge__
+2. __https://stackoverflow.com/questions/48814114/git-history-for-branch-after-merge__
 
-__https://errorsfixing.com/git-commit-history-of-a-file-showing-the-right-commits/__
+3. __https://errorsfixing.com/git-commit-history-of-a-file-showing-the-right-commits/__
 
-__https://docs.microsoft.com/en-us/azure/devops/repos/git/git-log-history-simplification?view=azure-devops__
+4. __https://docs.microsoft.com/en-us/azure/devops/repos/git/git-log-history-simplification?view=azure-devops__
 
-__http://ohyecloudy.com/pnotes/archives/git-file-log-history-simplification/__
+5. __http://ohyecloudy.com/pnotes/archives/git-file-log-history-simplification/__
 
 
-###### File History Simplification Default Mode
+### File History Simplification Default Mode
+<hr>
+
 History Simplification에는 Default Mode가 존재한다. git-scm의 설명은 이렇다. 
 
-__Default mode__
-Simplifies the history to the simplest history explaining the final state of the tree. Simplest because it prunes some side branches if the end result is the same (i.e. merging branches with the same content)
+
+    Default mode
+    Simplifies the history to the simplest history explaining the final state of the tree. Simplest because it prunes some side branches if the end result is the same (i.e. merging branches with the same content)
 
 해당 트리의 최종 상태를 설명하는 가장 간단한 히스토리로 만든다는 것이다. 만약 최종 결과가 똑같다면 몇몇 사이드 Branch들을 쳐내기도 한다. 
 
-여기서 최종 결과가 같다는 말이 무슨 말인지 이해가 안 됐는데, 기본적으로 merge를 하게 되면 충돌을 해결하는 등의 과정을 거친 후 브랜치들을 병합하게 된다. 따라서 최종 결과는 merge를 한 이상 같아질 수밖에 없는 게 팩트다. 
+쉽게 말해 어떠한 사이드 Branch를 쳐내더라도 최종 결과가 현재와 달라지지 않는다면 사이드 Branch를 쳐낸다.
 
-그렇다면, merged된 branch가 있을 경우, 이 Branch의 Commit들은 모두 history 출력 시 쳐낸다는 것인데, 개인적으로 테스트를 해본 결과 꼭 그렇지만은 않았다. 
+하지만 어떠한 상황에서 최종 결과가 달라지지 않고 문제가 발생하지 않는지 아직까지는 정확하게 알 수 없다.
 
-__microsoft azure__ 의 docs에서 설명하는 바에 따르면 merge시에 충돌이 발생하고 이에 따라 side branch의 커밋으로 인한 파일 수정 내용을 적용하지 않고 merge를 했을 때, File History는 Side Branch의 Commit과 Merge Commit을 모두 생략하게 된다.
+
+그렇다면 다른 문서를 보자.
+
+<hr>
+
+__microsoft azure__ 의 docs에서 설명하는 바에 따르면 merge시에 충돌이 발생하고 이에 따라 side branch의 커밋 수정 사항을 적용하지 않고 merge를 했을 때, File History는 Side Branch의 Commit과 Merge Commit을 모두 생략하게 된다.
 
 이것으로 볼 때, 내 생각으로는 최종 결과가 똑같다면 몇몇 사이드 Branch들을 쳐낸다는 얘기는 결국, 그 사이드 Branch를 쳐냈을 때 현재 파일의 최종 결과에 영향이 없다면, 즉, 최종 결과와 동일하다면 사이드 Branch를 쳐낸다는 뜻이라고 본다. 
 
@@ -125,26 +140,25 @@ git log --full-history [file-name]
 
 의 형식으로 적용할 수 있기 때문에 전체 History를 보기 원한다면 위의 명령어를 사용해야 한다. 
 
+__Push된 커밋 메시지 수정 시 유의사항__
 
-또한, GitHub 상에서는 History Simplification Default Mode가 적용되는 것으로 보인다. 
+Push된 Commit을 Amend한 후 그 상태로 push를 하게 되면, 다른 저장소에서 pull한 후에, amended commit이 다시 file history 상에 등장할 수 있다. 
 
-이 말은, Commit Message 수정을 위한 Amend Commit과 Merge시 충돌로 인해 생략된 수정 사항을 가리키는 커밋 같은 경우 GitHub File History에서는 제외될 수 있다는 것이다. 
-
-그러므로 GitHub를 통해 File History를 보는 것은 완전히 정확하진 않고, 전체 Commit History를 보거나 실제로 Git Bash에서 Full History를 봐야 정확하게 볼 수 있다. 
-
-결론은 Amend Commit을 통해 기존의 Commit Message를 수정할 것이라면, 그 수정 사항을 원격 저장소에 강제 Push할 때 다른 Contributor들의 로컬 저장소에서도 
+그러므로 Amend Commit을 통해 기존의 Commit Message를 수정할 것이라면, 그 수정 사항을 원격 저장소에 강제 Push할 때 다른 로컬 저장소에서도 
 
 ```
-git reset --hard [commit id last before amended commit]
+git reset --hard [commit id just before amended commit]
 git pull
 ```
 
 명령어 등을 통해 완벽하게 Amended Commit을 log 상에서 삭제하고 pull 하여 기존의 커밋이 다시 등장하게 되는 불상사를 막아야 한다.
 
 
-혹은 revert -> recommit(revert -> new branch -> cherry-pick -> merge or cherry-pick) (revert -> show reverted commit | apply -> commit)
+혹은 
+
+    revert -> recommit(revert -> new branch -> cherry-pick -> merge or cherry-pick) or (revert -> show reverted commit | apply -> commit)
 하는 방식을 통해 원격 저장소에 충돌을 일으키지 않으면서도 commit message를 수정할 수 있다.
 
 다만 이 방식은 기존의 commit이 제거되는 게 아니라 history 상에 남아있으면서도 revert commit으로 되돌린 사실을 알리는 방식이기 때문에 조금 지저분하게 보일 수는 있다. 
 
-따라서 이 방식을 이용할 때는 revert commit과 recommit의 commit message를 commit의 이유를 정확하게 적어 혼란을 방지해야 할 것 같다.
+따라서 이 방식을 이용할 때는 revert commit과 recommit의 commit message에 commit의 이유를 정확하게 적어 혼란을 방지해야 할 것 같다.
