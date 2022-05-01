@@ -612,3 +612,66 @@ __그렇기 때문에 Merge Commit은 그 두 커밋을 모두 거쳐가기로 �
 
 - 부모와 TREESAME한 커밋을 History 상에서 제외하고
 - Merge Commit과 TREESAME한 부모 커밋을 따라가기 위한 목적을 가지고 있는 로그 단순화 방법이다.
+
+## 4번 테스트
+
+#### 테스트 시행 전 상황 
+
+* ##### 브랜치 목록 
+
+    1. test-amend(local in desktop)
+    2. origin/test-amend(remote)
+    3. test-amend(local in notebook)
+
+* ##### 브랜치별 커밋 목록 
+
+1. test-amend(local in desktop)    
+    __0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ (HEAD -> test-amend, origin/test-amend) test.html add p tag and its contents   
+    __bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
+    __77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
+    __92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
+    __8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit
+2. origin/test-amend    
+    local in desktop과 동일
+3. test-amend(local in notebook)    
+    local in desktop과 동일  
+
+<hr>
+
+#### 테스트 과정 
+
+1. in notebook
+
+    test-amend 브랜치에서
+
+    <pre><code>test.html 파일 수정 -> git commit -a
+   git push</code></pre>
+
+2. in desktop
+
+    test-amend 브랜치에서 
+
+    <pre><code>git commit --amend
+   git push</code></pre>
+
+3. 안될 경우
+
+    <pre><code>git push --force-with-lease</code></pre>
+
+4. 또 안될 경우
+
+    <pre><code>git push -f</code></pre>
+
+<hr>
+
+#### 테스트 결과 
+
+##### 브랜치별 커밋 목록
+
+1. test-amend(local in desktop)   
+
+2. origin/test-amend(remote)   
+
+3. test-amend(local in notebook)    
+
+#### 결과 설명
