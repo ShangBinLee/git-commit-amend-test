@@ -669,9 +669,107 @@ __그렇기 때문에 Merge Commit은 그 두 커밋을 모두 거쳐가기로 �
 ##### 브랜치별 커밋 목록
 
 1. test-amend(local in desktop)   
+    __4af9b58a348d817d724e41a119cb494271571634__ (HEAD -> test-amend, origin/test-amend) test.html add p tag and its contents (modify commit message of 0d0dcc2)   
+    __bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
+    __77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
+    __92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
+    __8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit
 
 2. origin/test-amend(remote)   
-
+    local in desktop과 동일
 3. test-amend(local in notebook)    
+    __af39d629eea78743aaca62cdbeca12a65183d515__ (HEAD -> test-amend, origin/test-amend) test.html Add h4 tag and its content.   
+    __0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ test.html add p tag and its contents   
+    __bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
+    __77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
+    __92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
 
 #### 결과 설명
+
+1. in notebook
+
+    파일을 수정하고 추가 커밋을 진행하여 __af39d62__ 커밋이 추가 됐다.
+
+2. in remote repository
+
+    notebook에서 push한 후에는 __af39d62__ 커밋이 추가 됐다. 
+
+3. in desktop
+
+    커밋을 amend하고 push를 진행했다. 되지 않았다. 따라서 push --force-with-lease를 했다. push가 되지 않았다. push -f를 했다. push가 완료 됐다.
+
+4. in remote repository
+
+    desktop에서 push한 후에는 그 전의 __af39d62__ 커밋과 __0d0dcc2__ 커밋이 사라지고 __4af9b58__ 커밋이 추가 됐다.
+
+과정은 다를 지언정 결과적으로는 3번 테스트와 같다. 그러므로 notebook에서 pull하는 것은 생략했다. 
+
+중요한 것은 
+
+    git push --force-with-lease
+
+가 요번에는 실패했다는 사실이다. 
+
+    To github.com:ShangBinLee/git-commit-amend-test.git
+    ! [rejected]        test-amend -> test-amend (stale info)
+    error: failed to push some refs to 'github.com:ShangBinLee/git-commit-amend-test.git'
+
+#### --force-with-lease 동작 방식
+
+이것과 관련해서 이유를 알아보기 위해서 git-scm, stackoverflow, itnext.io의 문서를 참고했다. 
+
+1. https://git-scm.com/docs/git-push#Documentation/git-push.txt---no-force-with-lease
+
+2. https://stackoverflow.com/questions/52823692/git-push-force-with-lease-vs-force
+
+3. https://itnext.io/git-force-vs-force-with-lease-9d0e753e8c41
+
+4. https://git-scm.com/book/en/v2/Git-Internals-Git-References
+
+위의 문서에 정확한 내용이 나와있지만, 쉽게 말하자면 로컬 저장소가 remote repository의 현황을 알고 있는지 확인하고 그렇다면 강제 푸시를 허용하는 명령어이다.
+
+stackoverflow 답변에서 말하는 'remote branch on local machine' 즉, 자신의 local repository에 존재하는 현재 remote branch가 remote repository에 존재하는 branch와 최신 버전으로 연동되어 있느냐 하는 부분을 검증한다는 것이다. 
+
+이것은 remote branch on local repository와 branch on remote repository의 ref 값을 비교함으로써 이루어진다. 만약 두 값이 동일하다면 강제 푸시는 적용된다. 
+
+하지만, 두 값이 다를 경우 강제 푸시는 거절된다. 
+
+그렇다면 ref값이 다른 경우와 같은 경우는 어떤 경우일까. 
+
+먼저 로컬 저장소에서 원격 저장소로 push를 했을 때이다. 그 때는 Git에서 자동으로 ref 값을 변경한다. 
+
+또한 fetch를 했을 때도 그러하다. 기본적으로 fetch를 하게 되면 로컬 저장소 내의 remote branch를 갱신하기 때문이다. 
+
+따라서 fetch와 merge를 함께 진행하는 pull 명령어 또한 ref 값을 변경한다. 
+
+결국 push, fetch, pull이 ref 값을 원격 저장소와 동기화하도록 만드는 것이다. 
+
+다른 경우는 어떠할까? 내가 push를 해서 ref 값이 동기화된 상태인데, 다른 contributor가 다른 로컬 저장소에서 push를 했다. 그렇다면 원격 저장소의 ref 값과 나의 로컬 저장소의 ref 값은 달라지게 된다. 
+
+결국 내가 마지막으로 원격 저장소의 branch와 동기화를 한 후, 다른 누군가가 원격 저장소에 push를 해서 원격 저장소를 변경할 경우 ref 값은 달라지고 __--force-with-lease__ 를 통한 강제 푸시는 실패하게 된다.
+
+그렇다면 그런 경우에는 무조건 __--force__ 옵션을 사용해야 하는 걸까. 
+
+__그렇지 않다.__
+
+위에서 fetch를 했을 때도 ref 값을 동기화한다고 했다. 그렇다면 --force 옵션을 사용하지 않고 
+
+    git fetch
+    git push --force-with-lease
+
+명령어를 실행하는 것은 어떨까. 
+
+실제로 위 명령어는 성공적으로 실행된다. 
+
+결국 force-with-lease 명령어는 강제 푸시를 수행하는 로컬 저장소의 원격 브랜치가 원격 저장소의 그것과 동기화되어 있는지를 확인하는 최소한의 안전장치다. 
+
+##### --force-with-lease가 실패한 이유
+
+결국, desktop에서 <code>--force-with-lease</code>를 통한 강제 푸시가 실패한 이유는, desktop에서 pull하지 않고 작업한 후 푸시 했기 때문이다. 
+
+고로 이러한 경우, 일단 remote repository의 상태를 따로 확인하고, <code>--force(-f)</code> 옵션을 사용해서 강제 푸시를 하거나, 
+
+    git fetch
+    git push --force-with-lease
+
+명령으로 강제 푸시 해야 한다. 
