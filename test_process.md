@@ -773,3 +773,116 @@ __그렇지 않다.__
     git push --force-with-lease
 
 명령으로 강제 푸시 해야 한다. 
+
+## 5번 테스트
+
+#### 테스트 시행 전 상황 
+
+* ##### 브랜치 목록 
+
+    1. test-amend(local in desktop)
+    2. origin/test-amend(remote)
+    3. test-amend(local in notebook)
+
+* ##### 브랜치별 커밋 목록 
+
+1. test-amend(local in desktop)    
+    __0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ (HEAD -> test-amend, origin/test-amend) test.html add p tag and its contents   
+    __bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
+    __77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
+    __92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns   
+    __8b3c44b1fb91607c9bdc41b0512700a526fb9b1c__ README.md first commit
+2. origin/test-amend    
+    local in desktop과 동일
+3. test-amend(local in notebook)    
+    local in desktop과 동일
+<hr>
+
+#### 테스트 과정 
+
+1. in notebook   
+
+    test-amend 브랜치에서
+
+    <pre><code>test.html 파일 수정 -> git commit -a
+   git push</code></pre>
+
+2. in desktop
+
+    test-amend 브랜치에서 
+
+    <pre><code>git pull
+   git commit --amend
+   git push</code></pre>
+
+3. 안될 경우
+
+    <pre><code>git push --force-with-lease</code></pre>
+
+4. 또 안될 경우
+
+    <pre><code>git push -f</code></pre>
+<hr>
+
+#### 테스트 결과 
+
+##### 브랜치별 커밋 목록
+
+1. test-amend(local in desktop)   
+    __072da759406965833f7760860291c7e19340f8ab__ (HEAD -> test-amend, origin/test-amend) test.html add span tag and its contents. (modify 1c93350 commit message)   
+    __0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ test.html add p tag and its contents   
+    __bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
+    __77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
+    __92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns
+2. origin/test-amend(remote)  
+    local in desktop과 동일
+3. test-amend(local in notebook)      
+    __1c93350f79140b68d144b9fa1ffa5b5c4bdba24e__ (HEAD -> test-amend, origin/test-amend) test.html add span tag and its contents.   
+    __0d0dcc20fd4b636650dcdc9d1adfc8e969bacb36__ test.html add p tag and its contents   
+    __bd8e25414bd55531bb0dc6864c142df944ab1e00__ README.md add 주의   
+    __77ede9464455dfe7646161e925d87d0f3618eb46__ README.md add accent ordered list for situations and its expectations   
+    __92a323f422b31f3b50d59780eeeb4c55fe0f838f__ README.md add markdowns
+
+#### 결과 설명
+
+1. in notebook
+
+    파일을 수정하고 추가 커밋을 진행하여 __1c93350__ 커밋이 추가 됐다.
+
+2. in remote repository
+
+    notebook에서 push한 후에는 __1c93350__ 커밋이 추가 됐다. 
+
+3. in desktop
+
+    pull하여 __1c93350__ 커밋이 추가 됐다. 
+    그 상태에서 커밋을 amend하고 push를 진행했다. 되지 않았다. 
+    따라서 push --force-with-lease를 했다. push가 정상적으로 완료 됐다.
+
+4. in remote repository
+
+    desktop에서 push한 후에는 그 전의 __1c93350__ 커밋이 사라지고 __072da75__ 커밋으로 대체 됐다.
+
+
+--force-with-lease가 성공했다. 사실은 --force-with-lease의 원리상 5번 테스트와 1번 테스트는 동일한 경우이다. 
+
+왜냐하면 강제 푸시를 진행하는 쪽에서 pull을 통해서 로컬 저장소와 원격 저장소를 동기화했고 작업을 진행하여 강제 푸시를 하는 순간에도 두 저장소가 동기화된 상태였기 때문이다. 
+
+따라서 --force-with-lease는 성공할 수밖에 없다.
+
+
+
+
+## 결론
+
+amend를 통해 push된 커밋(메시지)을 수정하고 push하는 것은 불가능하다. fast-forward 방식으로 병합할 수 없기 때문이다. 
+
+따라서 강제 푸시를 통해 덮어써야 하는데, 여기서 --force-with-lease 옵션이 작업 도중의 제 3자의 push를 체크할 수 있어서 도움이 된다. 
+
+또한 이런 식으로 커밋 메시지를 수정할 경우
+
+1. 다른 contributor들은 수정 대상이었던 커밋의 부모 커밋으로 reset한 후 pull하거나
+
+2. 부모 커밋에서 branch 생성 후 rebase, cherry-pick, merge master branch(수정 대상 커밋이 존재하는 브랜치) 등으로 수정 대상 커밋 포함 그 자식 커밋까지 따로 보존한 상태에서 부모 커밋으로 reset 후 pull 하고 다시 rebase, cherry-pick을 통해 기존 커밋들을 깔끔하게 복원할 수 있다. 
+
+사실, 이러한 불상사를 만드는 것보다는 왠만하면 커밋이나 커밋 메시지를 꼼꼼하게 작성하고 확인해서 이런 일이 거의 없도록 하는 것이 좋다. 또한 push를 할 때는 rebase, merge, cherry-pick, commit --amend 등 push 후에 하기 힘든 작업을 미리 해놓는 게 좋다.
